@@ -32,7 +32,7 @@ public class TransformContainer {
     private static final String PACKAGE_NAME = "de/geolykt/canceltrace/transform/";
 
     public static byte[] transform(byte[] source, PluginDescriptionFile sourceFile,  String filename) {
-        if (filename.startsWith(PACKAGE_NAME + "asm") || filename.equals("de/geolykt/canceltrace/CancelTrace")) {
+        if (filename.startsWith("de/geolykt/canceltrace/")) {
             return source;
         }
         ClassReader reader = new ClassReader(source);
@@ -51,15 +51,15 @@ public class TransformContainer {
                 }
 
                 @Override
-                public MethodVisitor visitMethod(int access, String name, String descriptor, String signature,
+                public MethodVisitor visitMethod(int access, String mname, String mdescriptor, String signature,
                         String[] exceptions) {
-                    return new MethodVisitor(Opcodes.ASM9, super.visitMethod(access, name, descriptor, signature, exceptions)) {
+                    return new MethodVisitor(Opcodes.ASM9, super.visitMethod(access, mname, mdescriptor, signature, exceptions)) {
                         @Override
                         public void visitMethodInsn(int opcode, String owner, String name, String descriptor,
                                 boolean isInterface) {
-                            if (name.equals("setCancelled") && name.equals("(Z)V")) {
+                            if (name.equals("setCancelled") && descriptor.equals("(Z)V")) {
                                 super.visitInsn(Opcodes.DUP2);
-                                super.visitIntInsn(Opcodes.BIPUSH, CancelTrace.registerCauser(sourceFile.getName(), cname, name, descriptor));
+                                super.visitIntInsn(Opcodes.BIPUSH, CancelTrace.registerCauser(sourceFile.getName(), cname, mname, mdescriptor));
                                 super.visitMethodInsn(Opcodes.INVOKESTATIC, "de/geolykt/canceltrace/CancelTrace", "setCancelled", "(Ljava/lang/Object;ZI)V", false);
                                 modified.set(true);
                             }

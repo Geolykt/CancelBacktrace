@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>de.geolykt</groupId>
     <artifactId>cancel-backtrace</artifactId>
-    <version>0.0.1-20220906-2009</version>
+    <version>0.0.1-20220906-2036</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>

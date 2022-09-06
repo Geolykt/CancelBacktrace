@@ -212,7 +212,7 @@ public class TransformContainer {
             if (implMethod.name.equals("processClass") && implMethod.desc.equals("(" + pdfDesc + "Ljava/lang/String;[B)[B")) {
                 implMethod.instructions.add(new VarInsnNode(Opcodes.ALOAD, 1));
                 implMethod.instructions.add(new VarInsnNode(Opcodes.ALOAD, 2));
-                implMethod.instructions.add(new MethodInsnNode(Opcodes.INVOKESTATIC, Type.getInternalName(TransformContainer.class), "transform", "([B" + pdfDesc + " Ljava/lang/String;)[B"));
+                implMethod.instructions.add(new MethodInsnNode(Opcodes.INVOKESTATIC, Type.getInternalName(TransformContainer.class), "transform", "([B" + pdfDesc + "Ljava/lang/String;)[B"));
             }
 
             implMethod.instructions.add(new InsnNode(returnOpcode));
